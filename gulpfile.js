@@ -1,36 +1,43 @@
-var gulp = require('gulp');
-var less = require('gulp-less');
-
 var CONFIG = {
     watch: [{
         files: ['./components/**/*.*'],
         tasks: ['buildCss-dev']
-    }]
+    }],
+    less: {
+        development: {
+            options: {},
+            resultPath: './bin/dev'
+        },
+        production: {
+            options: {
+                compress: true
+            },
+            resultPath: './bin/production'
+        }
+    }
 };
 
-(function lessBuilder(gulp, less) {
-    var buildCSs = function(path, options) {
-        isError = false;
+var gulp = require('gulp');
+var less = require('gulp-less');
+
+(function lessBuilder(gulp, less, CONFIG) {
+    var buildCSs = function(config, label) {
+        console.log('Start: ' + label);
         gulp.src('./components/common.less')
             .on('error', console.log)
-            .pipe(less(options || {}))
-            .pipe(gulp.dest(path));
+            .pipe(less(config.options))
+            .pipe(gulp.dest(config.resultPath));
+        console.log('End.');
     };
 
     gulp.task('buildCss-dev', function () {
-        console.log('Start: Development build css');
-        buildCSs('./bin/dev');
-        console.log('End.');
+        buildCSs(CONFIG.development, 'Development build css');
     });
 
     gulp.task('buildCss-production', function () {
-        console.log('Start: Production build css');
-        buildCSs('./bin/production', {
-            compress: true
-        });
-        console.log('End.');
+        buildCSs(CONFIG.production, 'Production build css');
     });
-})(gulp, less);
+})(gulp, less, CONFIG.less);
 
 gulp.task('build', ['buildCss-dev', 'buildCss-production']);
 
