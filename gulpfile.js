@@ -18,9 +18,10 @@ var CONFIG = {
 };
 
 var gulp = require('gulp');
-var less = require('gulp-less');
 
-(function lessBuilder(gulp, less, CONFIG) {
+(function lessBuilder(gulp, CONFIG) {
+    var less = require('gulp-less');
+
     var buildCSs = function(config, label) {
         console.log('Start: ' + label);
         gulp.src('./components/common.less')
@@ -37,7 +38,7 @@ var less = require('gulp-less');
     gulp.task('buildCss-production', function () {
         buildCSs(CONFIG.production, 'Production build css');
     });
-})(gulp, less, CONFIG.less);
+})(gulp, CONFIG.less);
 
 gulp.task('build', ['buildCss-dev', 'buildCss-production']);
 
