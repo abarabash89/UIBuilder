@@ -1,21 +1,22 @@
 {
-  "name": "UIBuilder",
-  "version": "0.0.1",
-  "description": "CssBuilder",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/abarabash89/UIBuilder.git"
-  },
-  "keywords": [
-    "css"
-  ],
-  "author": "Andrey Barabash",
-  "bugs": {
-    "url": "https://github.com/abarabash89/UIBuilder/issues"
-  },
-  "dependencies": {
-    "phantomjs": ">=1.9.12",
-    "gulp": "*",
-    "less": "*"
-  }
+    "name": "UIBuilder",
+    "version": "0.0.1",
+    "description": "CssBuilder",
+    "author": "Andrey Barabash, Kirill Barabash",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/abarabash89/UIBuilder.git"
+    },
+    "keywords": [
+        "css"
+    ],
+    "bugs": {
+        "url": "https://github.com/abarabash89/UIBuilder/issues"
+    },
+    "dependencies": {
+        "phantomjs": ">=1.9.12",
+        "gulp": "*",
+        "gulp-less": "*",
+        "less": "*"
+    }
 }
