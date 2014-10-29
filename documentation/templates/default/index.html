@@ -7,28 +7,17 @@
 
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="bootstrap/documentation.css">
+
+    {%css_link%}
+
 </head>
 <body>
     <h1 class="docPage-title">Css components</h1>
     <section class="docPage-navigation">
         <ul class="nav nav-tabs nav-stacked">
-            <li>
-                <a href="#">Home1</a>
-                <a href="#">Home2</a>
-            </li>
+            <li>{%links%}</li>
         </ul>
     </section>
-    <section class="docPage-previewContainer docPage-float-clear">
-        <blockquote class="docPage-item" id="test">
-            <p>Input</p>
-            <small>Info text</small>
-            <pre>dsfer ewr tewr</pre>
-        </blockquote>
-        <blockquote class="docPage-item">
-            <p>Input</p>
-            <small>Info text</small>
-            <pre>dsfer ewr tewr</pre>
-        </blockquote>
-    </section>
+    <section class="docPage-previewContainer docPage-float-clear">{%items%}</section>
 </body>
 </html>
