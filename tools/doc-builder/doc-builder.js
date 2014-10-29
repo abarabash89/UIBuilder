@@ -109,8 +109,8 @@
         return indexHTML.replace(new RegExp('{%preview%}', 'g'), BUFFER.preview);
     };
 
-    global.build = function(config) {
-        var BUFFER = {
+    var clear = function() {
+        BUFFER = {
             navigation: '',
             preview: '',
             template: {
@@ -118,16 +118,22 @@
                 index: ''
             }
         };
+    };
 
+    global.build = function(config) {
+        clear();
         tools.log('START');
 
         if (!loadTemplate(config)) {
             tools.log('Exceptions: template not loaded');
+            clear();
+            return;
         }
 
         searchConfigs(CONFIG.cssPath);
 
         fs.writeFileSync(CONFIG.resultPath, buildIndexHTML(config), CONFIG.encode);
         tools.log('END');
+        clear();
     };
 })(module.exports);
