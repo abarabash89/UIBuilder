@@ -1,13 +1,11 @@
 (function(global) {
-    var CONFIG = {
-        docPath: './documentation/',
-        resultPath: './documentation/documentation.html',
-        templatePath: './documentation/templates/',
-        cssPath: './components/',
-        configFileName: 'cfg.json',
-        encode: 'utf8',
-        cssLink: '../bind/dev/common.js'
-    };
+    var CONFIG = require('./config');
+    var tools = require('./tools');
+    var util = require('util');
+    var fs = require('fs');
+    var path = require('path');
+    var hl = require("highlight").Highlight;
+
     var BUFFER = {
         navigation: '',
         preview: '',
@@ -17,38 +15,18 @@
         }
     };
 
-    var jf = require('jsonfile');
-    var util = require('util');
-    var fs = require('fs');
-    var path = require('path');
-
-    var log = function(text) {
-        console.log('DocBuilder: ' + text);
-    };
-
-    var readJSONFile = function(file) {
-        return jf.readFileSync(file);
-    };
-
-    var fileRead = function(path) {
-        if (fs.statSync(path).isDirectory()) {
-            return false;
-        }
-        return fs.readFileSync(path, CONFIG.encode);
-    };
-
     var loadTemplate = function(config) {
         var templatePath = CONFIG.templatePath + config.template;
 
         //index
-        var htmlTemplate = fileRead(templatePath + '/index.html');
+        var htmlTemplate = tools.fileRead(templatePath + '/index.html', CONFIG.encode);
         if (!htmlTemplate) {
             return false;
         }
         BUFFER.template.index = htmlTemplate;
 
         //item
-        var itemTemplate = fileRead(templatePath + '/item.html');
+        var itemTemplate = tools.fileRead(templatePath + '/item.html', CONFIG.encode);
         if (!itemTemplate) {
             return false;
         }
@@ -59,20 +37,20 @@
 
     var buildItem = function(item, path) {
         if (!item || !item.key || !item.path) {
-            log((item.name || item.key) + ' syntax error ' + path);
+            tools.log((item.name || item.key) + ' syntax error ' + path);
             return;
         }
 
-        var html = fileRead(path + item.path);
+        var html = tools.fileRead(path + item.path, CONFIG.encode);
         if (!html) {
-            log((item.name || item.key) + ' load error ' + path);
+            tools.log((item.name || item.key) + ' load error ' + path);
             return;
         }
 
         var itemHtml = BUFFER.template.item.replace(new RegExp('{%item_key%}', 'g'), item.key);
         itemHtml = itemHtml.replace(new RegExp('{%item_name%}', 'g'), item.name || item.key);
         itemHtml = itemHtml.replace(new RegExp('{%item_info%}', 'g'), item.info || '');
-        itemHtml = itemHtml.replace(new RegExp('{%item_code%}', 'g'), html);
+        itemHtml = itemHtml.replace(new RegExp('{%item_code%}', 'g'), hl(html));
         BUFFER.preview += itemHtml;
 
         BUFFER.navigation += '<a href="#' + item.key + '">' + (item.name || item.key) + '</a>';
@@ -80,7 +58,7 @@
 
     var readConfigAndCreateHTML = function(cfg, path, cnfgFileName) {
         if (!cfg) {
-            log('File error ' + cnfgFileName);
+            tools.log('File error ' + cnfgFileName);
             return false;
         }
 
@@ -92,15 +70,8 @@
             buildItem(cfg, path);
         }
 
-        log('Done ' + cnfgFileName);
+        tools.log('Done ' + cnfgFileName);
         return true;
-    };
-
-    var concatArr = function(a, b) {
-        for(var i = 0, l = b.length; i < l; i++) {
-            a.push(b[i]);
-        }
-        return a;
     };
 
     var searchConfigs = global.searchConfigs = function(path) {
@@ -115,15 +86,15 @@
             }
             var file = path + paths[i];
             if (fs.statSync(file).isDirectory()) {
-                cfgs = concatArr(cfgs, searchConfigs(file + '/'));
+                cfgs = tools.concatArr(cfgs, searchConfigs(file + '/'));
             }
 
             if (CONFIG.configFileName === paths[i]) {
-                log('Build ' + file);
-                var cfg = readJSONFile(file);
+                tools.log('Build ' + file);
+                var cfg = tools.readJSONFile(file);
                 if (readConfigAndCreateHTML(cfg, path, file)) {
                     cfgs.push({
-                        path: file,
+                        path: path,
                         cfg: cfg
                     });
                 }
@@ -142,16 +113,31 @@
         return indexHTML.replace(new RegExp('{%preview%}', 'g'), BUFFER.preview);
     };
 
+    var clear = function() {
+        BUFFER = {
+            navigation: '',
+            preview: '',
+            template: {
+                item: '',
+                index: ''
+            }
+        };
+    };
+
     global.build = function(config) {
-        log('START');
+        clear();
+        tools.log('START');
 
         if (!loadTemplate(config)) {
-            log('Exceptions: template not loaded');
+            tools.log('Exceptions: template not loaded');
+            clear();
+            return;
         }
 
         searchConfigs(CONFIG.cssPath);
 
         fs.writeFileSync(CONFIG.resultPath, buildIndexHTML(config), CONFIG.encode);
-        log('END');
+        tools.log('END');
+        clear();
     };
 })(module.exports);

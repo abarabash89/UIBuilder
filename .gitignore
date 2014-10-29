@@ -2,3 +2,4 @@
 node_modules
 bin
 documentation/documentation.html
+npm-debug.log

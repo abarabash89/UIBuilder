@@ -20,6 +20,8 @@
         "phantomcss": "*",
         "casperjs": "*",
         "resemblejs": "*",
-        "jsonfile": "*"
+        "jsonfile": "*",
+        "jsonfile": "*",
+        "highlight": "*"
     }
 }
