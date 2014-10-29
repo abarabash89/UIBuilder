@@ -17,6 +17,7 @@
         "phantomjs": ">=1.9.12",
         "gulp": "*",
         "gulp-less": "*",
-        "less": "*"
+        "less": "*",
+        "jsonfile": "*"
     }
 }
