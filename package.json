@@ -21,7 +21,6 @@
         "casperjs": "*",
         "resemblejs": "*",
         "jsonfile": "*",
-        "jsonfile": "*",
         "highlight": "*"
     }
 }
