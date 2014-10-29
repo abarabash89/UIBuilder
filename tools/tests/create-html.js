@@ -13,9 +13,8 @@
 
     var createPage = function (element) {
         var files = element.cfg;
-        var pathDir = path.dirname(element.path) + '/';
         for (var i = 0, l = files.length; i < l; i++) {
-            var text = fs.readFileSync(pathDir + files[i].path, CONFIG.encode);
+            var text = fs.readFileSync(element.path + files[i].path, CONFIG.encode);
             if (text) {
                 var fileContent = template.replace(CONFIG.key, text);
                 var filePath = CONFIG.tempDir + '/' + files[i].name.replace(' ', '-') + '.html';

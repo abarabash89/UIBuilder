@@ -57,11 +57,11 @@ var exec = require('child_process').exec;
     gulp.task('docBuild', ['documentation-build']);
 })(CONFIG.documentationBuilder);
 
-gulp.task('build', ['buildCss-dev', 'buildCss-production', 'doc-build']);
+gulp.task('build', ['buildCss-dev', 'buildCss-production', 'doc-build', 'tests']);
 
 gulp.task('tests', function runTests() {
     var cmd = CONFIG.tests.casperPath + ' test ' + CONFIG.tests.testsScript;
-    var config = require('./tools/documentation-builder/doc-builder').searchConfigs();
+    var config = require('./tools/doc-builder/doc-builder').searchConfigs();
     var createHtml = require('./tools/tests/create-html');
     createHtml.build(config);
     exec(cmd ,function (err, stdout, stderr) {
