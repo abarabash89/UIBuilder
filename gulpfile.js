@@ -15,6 +15,10 @@ var CONFIG = {
             resultPath: './bin/production'
         }
     },
+    tests: {
+        casperPath: './node_modules/.bin/casperjs',
+        testsScript: 'tools/tests/tests.js'
+    },
     documentationBuilder: {
         template: 'default',
         title: 'CSS components'
@@ -22,6 +26,7 @@ var CONFIG = {
 };
 
 var gulp = require('gulp');
+var exec = require('child_process').exec;
 
 (function lessBuilder(gulp, CONFIG) {
     var less = require('gulp-less');
@@ -52,8 +57,20 @@ var gulp = require('gulp');
     gulp.task('docBuild', ['documentation-build']);
 })(CONFIG.documentationBuilder);
 
-gulp.task('build', ['buildCss-dev', 'buildCss-production', 'doc-build']);
+gulp.task('build', ['buildCss-dev', 'buildCss-production', 'doc-build', 'tests']);
 
+gulp.task('tests', function runTests() {
+    var cmd = CONFIG.tests.casperPath + ' test ' + CONFIG.tests.testsScript;
+    var config = require('./tools/doc-builder/doc-builder').searchConfigs();
+    var createHtml = require('./tools/tests/create-html');
+    createHtml.build(config);
+    exec(cmd ,function (err, stdout, stderr) {
+        stdout && console.log(stdout);
+        stderr && console.log(stderr);
+        err && console.log(err);
+        createHtml.clear();
+    });
+});
 //*===WATCH - START===*/
 gulp.task('watch', function() {
     for(var i = 0, l = CONFIG.watch.length; i < l; i++) {
