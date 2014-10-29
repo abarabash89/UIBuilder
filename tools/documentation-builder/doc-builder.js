@@ -104,6 +104,9 @@
     };
 
     var searchConfigs = global.searchConfigs = function(path) {
+        if (!path) {
+            path = CONFIG.cssPath;
+        }
         var paths = fs.readdirSync(path);
         var cfgs = [];
         for (var i = 0, l = paths.length; i < l; i++ ) {
