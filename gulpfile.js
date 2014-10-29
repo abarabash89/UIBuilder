@@ -6,13 +6,13 @@ var CONFIG = {
     less: {
         development: {
             options: {},
-            resultPath: './documentation/dev'
+            resultPath: './bin/dev'
         },
         production: {
             options: {
                 compress: true
             },
-            resultPath: './documentation/production'
+            resultPath: './bin/production'
         }
     }
 };

@@ -1,3 +1,7 @@
+.docPage-title {
+    text-align: center;
+    margin: 10px;
+}
 .docPage-navigation {
     width: 15%;
     float: left;
