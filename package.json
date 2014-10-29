@@ -14,9 +14,11 @@
         "url": "https://github.com/abarabash89/UIBuilder/issues"
     },
     "dependencies": {
-        "phantomjs": ">=1.9.12",
         "gulp": "*",
         "gulp-less": "*",
-        "less": "*"
+        "less": "*",
+        "phantomcss": "*",
+        "casperjs": "*",
+        "resemblejs": "*"
     }
 }
