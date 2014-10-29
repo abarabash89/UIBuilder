@@ -18,6 +18,7 @@
         "gulp": "*",
         "gulp-less": "*",
         "less": "*",
-        "jsonfile": "*"
+        "jsonfile": "*",
+        "highlight": "*"
     }
 }
