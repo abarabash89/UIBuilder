@@ -1,0 +1,20 @@
+.docPage-navigation {
+    width: 15%;
+    float: left;
+}
+.docPage-previewContainer {
+    position: absolute;
+    margin-left: 15%;
+    width: 84%;
+    padding: 0px 5px;
+}
+.docPage-float-clear:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.docPage-item {
+    padding: 5px 0 0 10px;
+}
