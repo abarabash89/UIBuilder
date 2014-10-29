@@ -14,10 +14,15 @@ var CONFIG = {
             },
             resultPath: './bin/production'
         }
+    },
+    tests: {
+        casperPath: './node_modules/.bin/casperjs',
+        testsScript: 'tests/tests.js'
     }
 };
 
 var gulp = require('gulp');
+var exec = require('child_process').exec;
 
 (function lessBuilder(gulp, CONFIG) {
     var less = require('gulp-less');
@@ -42,6 +47,14 @@ var gulp = require('gulp');
 
 gulp.task('build', ['buildCss-dev', 'buildCss-production']);
 
+gulp.task('tests', function runTests() {
+    var cmd = CONFIG.tests.casperPath + ' test ' + CONFIG.tests.testsScript;
+    exec(cmd ,function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        console.log(err);
+    });
+});
 //*===WATCH - START===*/
 gulp.task('watch', function() {
     for(var i = 0, l = CONFIG.watch.length; i < l; i++) {
