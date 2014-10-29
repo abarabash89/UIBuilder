@@ -1,7 +1,7 @@
 var CONFIG = {
     watch: [{
         files: ['./components/**/*.*'],
-        tasks: ['buildCss-dev']
+        tasks: ['buildCss-dev', 'doc-build']
     }],
     less: {
         development: {
@@ -14,6 +14,10 @@ var CONFIG = {
             },
             resultPath: './bin/production'
         }
+    },
+    documentationBuilder: {
+        template: 'default',
+        title: 'CSS components'
     }
 };
 
@@ -40,7 +44,15 @@ var gulp = require('gulp');
     });
 })(gulp, CONFIG.less);
 
-gulp.task('build', ['buildCss-dev', 'buildCss-production']);
+(function documentationBuilder(CONFIG) {
+    var docBuilder = require('./tools/doc-builder/doc-builder');
+    gulp.task('doc-build', function () {
+        docBuilder.build(CONFIG);
+    });
+    gulp.task('docBuild', ['documentation-build']);
+})(CONFIG.documentationBuilder);
+
+gulp.task('build', ['buildCss-dev', 'buildCss-production', 'doc-build']);
 
 //*===WATCH - START===*/
 gulp.task('watch', function() {
