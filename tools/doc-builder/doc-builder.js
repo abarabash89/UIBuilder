@@ -4,6 +4,7 @@
     var util = require('util');
     var fs = require('fs');
     var path = require('path');
+    var hl = require("highlight").Highlight;
 
     var BUFFER = {
         navigation: '',
@@ -49,7 +50,7 @@
         var itemHtml = BUFFER.template.item.replace(new RegExp('{%item_key%}', 'g'), item.key);
         itemHtml = itemHtml.replace(new RegExp('{%item_name%}', 'g'), item.name || item.key);
         itemHtml = itemHtml.replace(new RegExp('{%item_info%}', 'g'), item.info || '');
-        itemHtml = itemHtml.replace(new RegExp('{%item_code%}', 'g'), html);
+        itemHtml = itemHtml.replace(new RegExp('{%item_code%}', 'g'), hl(html));
         BUFFER.preview += itemHtml;
 
         BUFFER.navigation += '<a href="#' + item.key + '">' + (item.name || item.key) + '</a>';
