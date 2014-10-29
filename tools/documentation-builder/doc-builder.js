@@ -5,7 +5,8 @@
         templatePath: './documentation/templates/',
         cssPath: './components/',
         configFileName: 'cfg.json',
-        encode: 'utf8'
+        encode: 'utf8',
+        cssLink: './bind/dev/common.js'
     };
     var BUFFER = {
         navigation: '',
@@ -67,7 +68,13 @@
             return;
         }
 
-        html = BUFFER.template.item.replace('item_key', item.key);
+        var itemHtml = BUFFER.template.item.replace('{%item_key%}', item.key);
+        itemHtml = itemHtml.replace('{%item_name%}', item.name || item.key);
+        itemHtml = itemHtml.replace('{%item_info%}', item.info || '');
+        itemHtml = itemHtml.replace('{%item_code%}', html);
+        BUFFER.preview += itemHtml;
+
+        BUFFER.navigation += '<a href="#' + item.key + '">' + (item.name || item.key) + '</a>';
     };
 
     var readConfigAndCreateHTML = function(cfg, path, cnfgFileName) {
@@ -121,6 +128,13 @@
         return cfgs;
     };
 
+    var buildIndexHTML = function(config) {
+        var indexHTML = BUFFER.template.index.replace('{%title%}', config.title);
+        indexHTML = indexHTML.replace('{%css_link%}', config.cssLink);
+        indexHTML = indexHTML.replace('{%links%}', BUFFER.navigation);
+        return indexHTML.replace('{%preview%}', BUFFER.preview);
+    };
+
     global.build = function(config) {
         log('START');
 
@@ -128,7 +142,13 @@
             log('Exceptions: template not loaded');
         }
 
-        searchConfigs(CONFIG.cssPath));
-        log('END');
+        searchConfigs(CONFIG.cssPath);
+
+        var result = fs.writeFileSync(CONFIG.resultPath, buildIndexHTML(config), CONFIG.encode);
+        if (result) {
+            log('END');
+        } else {
+            log('Build file error.');
+        }
     };
 })(module.exports);
