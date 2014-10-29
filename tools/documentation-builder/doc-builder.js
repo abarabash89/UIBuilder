@@ -6,7 +6,7 @@
         cssPath: './components/',
         configFileName: 'cfg.json',
         encode: 'utf8',
-        cssLink: './bind/dev/common.js'
+        cssLink: '../bind/dev/common.js'
     };
     var BUFFER = {
         navigation: '',
@@ -58,7 +58,8 @@
     };
 
     var buildItem = function(item, path) {
-        if (!item || item.key || item.path) {
+        if (!item || !item.key || !item.path) {
+            log((item.name || item.key) + ' syntax error ' + path);
             return;
         }
 
@@ -68,10 +69,10 @@
             return;
         }
 
-        var itemHtml = BUFFER.template.item.replace('{%item_key%}', item.key);
-        itemHtml = itemHtml.replace('{%item_name%}', item.name || item.key);
-        itemHtml = itemHtml.replace('{%item_info%}', item.info || '');
-        itemHtml = itemHtml.replace('{%item_code%}', html);
+        var itemHtml = BUFFER.template.item.replace(new RegExp('{%item_key%}', 'g'), item.key);
+        itemHtml = itemHtml.replace(new RegExp('{%item_name%}', 'g'), item.name || item.key);
+        itemHtml = itemHtml.replace(new RegExp('{%item_info%}', 'g'), item.info || '');
+        itemHtml = itemHtml.replace(new RegExp('{%item_code%}', 'g'), html);
         BUFFER.preview += itemHtml;
 
         BUFFER.navigation += '<a href="#' + item.key + '">' + (item.name || item.key) + '</a>';
@@ -129,10 +130,13 @@
     };
 
     var buildIndexHTML = function(config) {
-        var indexHTML = BUFFER.template.index.replace('{%title%}', config.title);
-        indexHTML = indexHTML.replace('{%css_link%}', config.cssLink);
-        indexHTML = indexHTML.replace('{%links%}', BUFFER.navigation);
-        return indexHTML.replace('{%preview%}', BUFFER.preview);
+        var indexHTML = BUFFER.template.index.replace(new RegExp('{%title%}', 'g'), config.title);
+        indexHTML = indexHTML.replace(
+            new RegExp('{%css_link%}', 'g'),
+            '<link rel="stylesheet" type="text/css" href="' + CONFIG.cssLink + '">'
+        );
+        indexHTML = indexHTML.replace(new RegExp('{%links%}', 'g'), BUFFER.navigation);
+        return indexHTML.replace(new RegExp('{%preview%}', 'g'), BUFFER.preview);
     };
 
     global.build = function(config) {
@@ -144,11 +148,7 @@
 
         searchConfigs(CONFIG.cssPath);
 
-        var result = fs.writeFileSync(CONFIG.resultPath, buildIndexHTML(config), CONFIG.encode);
-        if (result) {
-            log('END');
-        } else {
-            log('Build file error.');
-        }
+        fs.writeFileSync(CONFIG.resultPath, buildIndexHTML(config), CONFIG.encode);
+        log('END');
     };
 })(module.exports);
