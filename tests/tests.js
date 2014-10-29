@@ -3,7 +3,7 @@ var phantomcss = require('../node_modules/phantomcss/phantomcss.js');
 phantomcss.init({
     screenshotRoot: './tests/screenshots',
     failedComparisonsRoot: './tests/fail-screenshots',
-    libraryRoot: './node_modules/phantomcss/',
+    libraryRoot: './node_modules/phantomcss/'
 });
 
 

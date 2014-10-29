@@ -1,4 +1,4 @@
 .idea
 node_modules
-bin/dev
-bin/production
+bin
+documentation/documentation.html

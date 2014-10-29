@@ -1,7 +1,7 @@
 var CONFIG = {
     watch: [{
         files: ['./components/**/*.*'],
-        tasks: ['buildCss-dev']
+        tasks: ['buildCss-dev', 'doc-build']
     }],
     less: {
         development: {
@@ -18,6 +18,10 @@ var CONFIG = {
     tests: {
         casperPath: './node_modules/.bin/casperjs',
         testsScript: 'tests/tests.js'
+    },
+    documentationBuilder: {
+        template: 'default',
+        title: 'CSS components'
     }
 };
 
@@ -45,7 +49,14 @@ var exec = require('child_process').exec;
     });
 })(gulp, CONFIG.less);
 
-gulp.task('build', ['buildCss-dev', 'buildCss-production']);
+(function documentationBuilder(CONFIG) {
+    gulp.task('doc-build', function () {
+        require('./tools/documentation-builder/doc-builder').build(CONFIG);
+    });
+    gulp.task('docBuild', ['documentation-build']);
+})(CONFIG.documentationBuilder);
+
+gulp.task('build', ['buildCss-dev', 'buildCss-production', 'doc-build']);
 
 gulp.task('tests', function runTests() {
     var cmd = CONFIG.tests.casperPath + ' test ' + CONFIG.tests.testsScript;

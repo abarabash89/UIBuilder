@@ -3,21 +3,21 @@
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Css components</title>
+    <title>{%title%}</title>
 
-    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="bootstrap/documentation.css">
+    <link rel="stylesheet" type="text/css" href="./templates/default/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./templates/default/bootstrap/documentation.css">
 
     {%css_link%}
 
 </head>
 <body>
-    <h1 class="docPage-title">Css components</h1>
+    <h1 class="docPage-title">{%title%}</h1>
     <section class="docPage-navigation">
         <ul class="nav nav-tabs nav-stacked">
             <li>{%links%}</li>
         </ul>
     </section>
-    <section class="docPage-previewContainer docPage-float-clear">{%items%}</section>
+    <section class="docPage-previewContainer docPage-float-clear">{%preview%}</section>
 </body>
 </html>
