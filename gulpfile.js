@@ -46,7 +46,7 @@ var gulp = require('gulp');
 
 (function documentationBuilder(CONFIG) {
     gulp.task('doc-build', function () {
-        require('./tools/documentation-builder/doc-builder').build(CONFIG);
+        require('./tools/doc-builder/doc-builder').build(CONFIG);
     });
     gulp.task('docBuild', ['documentation-build']);
 })(CONFIG.documentationBuilder);
