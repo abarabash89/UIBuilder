@@ -51,6 +51,7 @@
         itemHtml = itemHtml.replace(new RegExp('{%item_name%}', 'g'), item.name || item.key);
         itemHtml = itemHtml.replace(new RegExp('{%item_info%}', 'g'), item.info || '');
         itemHtml = itemHtml.replace(new RegExp('{%item_code%}', 'g'), hl(html));
+        itemHtml = itemHtml.replace(new RegExp('{%item_element%}', 'g'), html);
         BUFFER.preview += itemHtml;
 
         BUFFER.navigation += '<a href="#' + item.key + '">' + (item.name || item.key) + '</a>';
