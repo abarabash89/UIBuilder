@@ -58,11 +58,6 @@
     };
 
     var readConfigAndCreateHTML = function(cfg, path, cnfgFileName) {
-        if (!cfg) {
-            tools.log('File error ' + cnfgFileName);
-            return false;
-        }
-
         if (util.isArray(cfg)) {
             for(var i = 0, l = cfg.length; i < l; i++) {
                 buildItem(cfg[i], path);
@@ -75,7 +70,7 @@
         return true;
     };
 
-    var searchConfigs = global.searchConfigs = function(path) {
+    var searchConfigs = global.searchConfigs = function(path, isBuild) {
         if (!path) {
             path = CONFIG.cssPath;
         }
@@ -87,17 +82,26 @@
             }
             var file = path + paths[i];
             if (fs.statSync(file).isDirectory()) {
-                cfgs = tools.concatArr(cfgs, searchConfigs(file + '/'));
+                var folderCfgs = searchConfigs(file + '/', isBuild);
+                cfgs = tools.concatArr(cfgs, folderCfgs);
             }
 
             if (CONFIG.configFileName === paths[i]) {
                 tools.log('Build ' + file);
+
                 var cfg = tools.readJSONFile(file);
-                if (readConfigAndCreateHTML(cfg, path, file)) {
-                    cfgs.push({
-                        path: path,
-                        cfg: cfg
-                    });
+                if (!cfg) {
+                    tools.log('File error ' + cnfgFileName);
+                    continue;
+                }
+
+                cfgs.push({
+                    path: path,
+                    cfg: cfg
+                });
+
+                if (isBuild) {
+                    readConfigAndCreateHTML(cfg, path, file);
                 }
             }
         }
@@ -135,7 +139,7 @@
             return;
         }
 
-        searchConfigs(CONFIG.cssPath);
+        searchConfigs(CONFIG.cssPath, true);
 
         fs.writeFileSync(CONFIG.resultPath, buildIndexHTML(config), CONFIG.encode);
         tools.log('END');

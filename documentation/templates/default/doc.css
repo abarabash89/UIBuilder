@@ -1,6 +1,17 @@
 .docPage-title {
     text-align: center;
     margin: 10px;
+    font-family: inherit;
+    font-weight: bold;
+    color: inherit;
+    text-rendering: optimizelegibility;
+    font-size: 38.5px;
+    line-height: 40px;
+    -webkit-margin-before: 0.67em;
+    -webkit-margin-after: 0.67em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    display: block;
 }
 .docPage-navigation {
     width: 15%;
@@ -24,4 +35,104 @@
 }
 .docPage-item__element {
     overflow-x: auto;
+    padding: 3px;
+}
+.docPage-item__info {
+    font-size: 85%;
+    padding: 0 0 10px;
+}
+
+.docPage-item {
+    padding: 0 0 0 15px;
+    margin: 0 0 20px;
+    border-left: 5px solid #eeeeee;
+}
+.docPage-item__name {
+    margin: 0 0 10px;
+}
+
+.docPage-item .docPage-item__name {
+    margin-bottom: 0;
+    font-size: 17.5px;
+    font-weight: 300;
+    line-height: 1.25;
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+
+.docPage-item .docPage-item__info {
+    display: block;
+    line-height: 20px;
+    color: #999999;
+}
+
+.docPage-item .docPage-item__info:before {
+    content: '\2014 \00A0';
+}
+.docPage-item:before,
+.docPage-item:after {
+    content: "";
+}
+
+.docPage-item__code {
+    padding: 2px 4px;
+    color: #d14;
+    white-space: nowrap;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+}
+.docPage {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: #333333;
+}
+
+.docPage-nav {
+    border-bottom: 0;
+    margin-bottom: 20px;
+    margin-left: 0;
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+    display: block;
+    padding-left: 0;
+}
+.docPage-nav:before,
+.docPage-nav:after{
+    clear: both;
+    display: table;
+    line-height: 0;
+    content: "";
+}
+.docPage-nav__container {
+    line-height: 20px;
+    list-style: none;
+}
+.docPage-nav__container a {
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    border: 1px solid #ddd;
+    margin-right: 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    line-height: 20px;
+    padding-right: 12px;
+    padding-left: 12px;
+    display: block;
+    color: #0088cc;
+    text-decoration: none;
+    text-align: -webkit-match-parent;
+}
+.docPage-nav__container a:active {
+    background-color: #0088cc;
+    color: white;
 }
