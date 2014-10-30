@@ -19,7 +19,6 @@
         "less": "*",
         "phantomcss": "*",
         "casperjs": "*",
-        "resemblejs": "*",
         "jsonfile": "*",
         "highlight": "*"
     }
