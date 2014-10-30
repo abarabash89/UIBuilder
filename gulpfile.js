@@ -57,8 +57,6 @@ var exec = require('child_process').exec;
     gulp.task('docBuild', ['documentation-build']);
 })(CONFIG.documentationBuilder);
 
-gulp.task('build', ['buildCss-dev', 'buildCss-production', 'doc-build', 'tests']);
-
 gulp.task('tests', function runTests() {
     var cmd = CONFIG.tests.casperPath + ' test ' + CONFIG.tests.testsScript;
     var config = require('./tools/doc-builder/doc-builder').searchConfigs();
@@ -71,6 +69,7 @@ gulp.task('tests', function runTests() {
         createHtml.clear();
     });
 });
+
 //*===WATCH - START===*/
 gulp.task('watch', function() {
     for(var i = 0, l = CONFIG.watch.length; i < l; i++) {
@@ -78,3 +77,5 @@ gulp.task('watch', function() {
     }
 });
 //*===WATCH - END===*/
+
+gulp.task('build', ['buildCss-dev', 'buildCss-production', 'doc-build', 'tests']);
