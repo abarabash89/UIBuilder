@@ -22,3 +22,6 @@
 .docPage-item {
     padding: 5px 0 0 10px;
 }
+.docPage-item__element {
+    overflow-x: auto;
+}

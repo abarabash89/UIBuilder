@@ -5,5 +5,5 @@ module.exports = {
     cssPath: './components/',
     configFileName: 'cfg.json',
     encode: 'utf8',
-    cssLink: '../bind/dev/common.js'
+    cssLink: '../bin/dev/common.css'
 };

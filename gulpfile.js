@@ -21,7 +21,7 @@ var CONFIG = {
     },
     documentationBuilder: {
         template: 'default',
-        title: 'CSS components'
+        title: 'UIBilder documentation'
     }
 };
 
