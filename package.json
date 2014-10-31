@@ -15,11 +15,13 @@
     },
     "dependencies": {
         "gulp": "*",
-        "gulp-less": "*",
-        "less": "*",
+        "gulp-stylus": "*",
+        "stylus": "*",
+        "nib": "*",
         "phantomcss": "*",
         "casperjs": "*",
         "jsonfile": "*",
-        "highlight": "*"
+        "highlight": "*",
+        "require-dir": "^0.1.0"
     }
 }
