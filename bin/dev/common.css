@@ -15,9 +15,6 @@
   height: 36px;
   width: 100%;
   font-size: 27px;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
 }
 .test-img {
   background-image: url("icon-email.png");
