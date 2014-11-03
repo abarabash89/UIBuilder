@@ -17,7 +17,7 @@
         "gulp": "*",
         "gulp-stylus": "*",
         "stylus": "*",
-        "gulp-autoprefixer": "*",
+        "autoprefixer-stylus": "*",
         "nib": "*",
         "gulp-css-base64": "*",
         "phantomcss": "*",
