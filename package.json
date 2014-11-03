@@ -19,7 +19,6 @@
         "stylus": "*",
         "autoprefixer-stylus": "*",
         "nib": "*",
-        "gulp-css-base64": "*",
         "phantomcss": "*",
         "casperjs": "*",
         "jsonfile": "*",

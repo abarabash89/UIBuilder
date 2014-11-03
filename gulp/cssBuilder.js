@@ -2,7 +2,6 @@ var gulp = require('gulp');
 var stylus = require('gulp-stylus');
 var autoprefixer = require('autoprefixer-stylus');
 var nib = require('nib');
-var cssBase64 = require('gulp-css-base64');
 
 var CONFIG = {
     startFile: './components/common.styl',
