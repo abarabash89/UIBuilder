@@ -1,17 +1,20 @@
 var gulp = require('gulp');
-var nib = require('nib');
 var stylus = require('gulp-stylus');
+var autoprefixer = require('gulp-autoprefixer');
+var nib = require('nib');
+var cssBase64 = require('gulp-css-base64');
 
 var CONFIG = {
+    startFile: './components/common.styl',
     development: {
         options: {
-            use: nib()
+            use: [nib()]
         },
         resultPath: './bin/dev'
     },
     production: {
         options: {
-            use: nib(),
+            use: [nib()],
             compress: true
         },
         resultPath: './bin/production'
@@ -20,8 +23,16 @@ var CONFIG = {
 
 var buildCSs = function(config, label) {
     console.log('Start: ' + label);
-    gulp.src('./components/common.styl')
+    gulp.src(CONFIG.startFile)
         .pipe(stylus(config.options))
+        .pipe(gulp.dest(config.resultPath));
+
+    gulp.src(config.resultPath + '/common.css')
+        .on('error', console.log)
+        .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: true
+        }))
         .pipe(gulp.dest(config.resultPath));
     console.log('End.');
 };

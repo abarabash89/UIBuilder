@@ -9,9 +9,16 @@
   box-shadow: 0 0 4px #000;
   border-radius: 5px;
   padding: 0px 10px;
+  box-sizing: border-box;
 }
 .input_type_big {
   height: 36px;
   width: 100%;
   font-size: 27px;
+}
+.test-img {
+  background-image: url("icon-email.png");
+  width: 128px;
+  height: 128px;
+  display: inline-block;
 }
