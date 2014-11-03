@@ -15,7 +15,6 @@
     },
     "dependencies": {
         "gulp": "*",
-        "gulp-stylus": "*",
         "stylus": "*",
         "autoprefixer-stylus": "*",
         "nib": "*",

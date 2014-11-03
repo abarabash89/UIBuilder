@@ -1,41 +1,29 @@
 var gulp = require('gulp');
-var stylus = require('gulp-stylus');
-var autoprefixer = require('autoprefixer-stylus');
-var nib = require('nib');
+var cssBuilder = require('../tools/stylusBuilder/builder');
 
 var CONFIG = {
-    startFile: './components/common.styl',
+    paths: {
+        fileName: 'common.styl',
+        basePath: './components/'
+    },
     development: {
-        options: {
-            use: [nib(), autoprefixer({
-                browsers: ['last 2 version']
-            })]
-        },
-        resultPath: './bin/dev'
+        resultPath: './bin/dev/common.css'
     },
     production: {
-        options: {
-            use: [nib(), autoprefixer({
-                browsers: ['last 2 version']
-            })],
-            compress: true
-        },
-        resultPath: './bin/production'
+        resultPath: './bin/production/common.css'
     }
 };
 
-var buildCSs = function(config, label) {
+var buildCSs = function(config, type, label) {
     console.log('Start: ' + label);
-    gulp.src(CONFIG.startFile)
-        .pipe(stylus(config.options))
-        .pipe(gulp.dest(config.resultPath));
+    cssBuilder(CONFIG.paths, config, type);
     console.log('End.');
 };
 
 gulp.task('buildCss-dev', function () {
-    buildCSs(CONFIG.development, 'Development build css');
+    buildCSs(CONFIG.development, 'development', 'Development build css');
 });
 
 gulp.task('buildCss-production', function () {
-    buildCSs(CONFIG.production, 'Production build css');
+    buildCSs(CONFIG.production, 'production', 'Production build css');
 });
