@@ -8,19 +8,28 @@
 
     var fs = require('fs');
     var path = require('path');
+    var util = require('util');
 
     var template = '';
 
+    var createHtmlPage = function (element, file) {
+        var text = fs.readFileSync(element.path + file.path, CONFIG.encode);
+        if (text) {
+            var fileContent = template.replace(CONFIG.key, text);
+            var filePath = CONFIG.tempDir + '/' + file.name.replace(' ', '-') + '.html';
+            fs.writeFileSync(filePath, fileContent, CONFIG.encode);
+        }
+    };
+
     var createPage = function (element) {
         var files = element.cfg;
-        for (var i = 0, l = files.length; i < l; i++) {
-            var text = fs.readFileSync(element.path + files[i].path, CONFIG.encode);
-            if (text) {
-                var fileContent = template.replace(CONFIG.key, text);
-                var filePath = CONFIG.tempDir + '/' + files[i].name.replace(' ', '-') + '.html';
-                fs.writeFileSync(filePath, fileContent, CONFIG.encode);
+        if (util.isArray(files)) {
+            for (var i = 0, l = files.length; i < l; i++) {
+                createHtmlPage(element, files[i]);
             }
+            return;
         }
+        createHtmlPage(element, files);
     };
 
     var isExistDir = function (path) {
