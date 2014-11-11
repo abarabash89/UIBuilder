@@ -40,7 +40,7 @@ gulp.task('create', function runTests() {
         return;
     }
 
-    fs.writeFileSync(folderPath + '/' + CONFIG.struct.html.replace('%name%', name), '<div>asdasdasdasd</div>');
+    fs.writeFileSync(folderPath + '/' + CONFIG.struct.html.replace('%name%', name), '');
     fs.writeFileSync(
         folderPath + '/' + CONFIG.struct.style.replace('%name%', name),
         CONFIG.style.replace('%name%', name)
