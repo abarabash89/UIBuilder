@@ -56,7 +56,6 @@ documentation/documentation.html
 ```
     gulp doc-build
 ```
-```
 
 ##Create element documentation
 ```
